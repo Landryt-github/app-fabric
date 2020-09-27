@@ -3,4 +3,8 @@ export interface Config {
         projectId?: string;
         keyFile?: string;
     };
+    pubsub: {
+        projectId?: string;
+        keyFile?: string;
+    };
 }

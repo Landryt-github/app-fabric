@@ -5,7 +5,8 @@ export const CONFIG_OPTIONS = 'STORAGE_OPTIONS';
 
 @Injectable()
 export class FileStorageService {
-    storage: Storage;
+    private storage: Storage;
+
     constructor(@Inject(CONFIG_OPTIONS)private options:any){
         this.storage = new Storage({
             projectId: options.projectId,
@@ -24,7 +25,41 @@ export class FileStorageService {
         return Promise.all([])
     }
 
-    async uploadDocToStorage(fileObj: any,bucket:Bucket,folder:string): Promise<string> {
+    async  getReadSignedUrl(bucket_name:string,filename: string) {
+        const [url] = await this.storage
+                          .bucket(bucket_name)
+                          .file(filename)
+                          .getSignedUrl({
+                            version:"v4",
+                            action: "read",
+                            expires: Date.now() + 5 * 60 * 1000
+                          });
+
+        return url;
+    }
+
+    async getFile(bucket_name:string,filename: string) {
+      const file =await this.storage
+                        .bucket(bucket_name)
+                        .file(filename);
+   
+    }
+
+    async createWriteStream(bucket_name:string,filename: string) {
+      const writestream =await this.storage
+                        .bucket(bucket_name)
+                        .file(filename)
+                        .createWriteStream()
+    }
+
+    
+    async downloadFile(bucket_name:string,filename: string,destination:string) {
+      return await this.storage.bucket(bucket_name).file(filename).download({
+        destination:destination
+      })
+    }
+
+    private async uploadDocToStorage(fileObj: any,bucket:Bucket,folder:string): Promise<string> {
 
         return new Promise((resolve, reject) => {
           let fileUpload = bucket.file(`${folder}/${fileObj.originalname}`);

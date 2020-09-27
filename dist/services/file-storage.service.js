@@ -34,6 +34,33 @@ let FileStorageService = class FileStorageService {
         }
         return Promise.all([]);
     }
+    async getReadSignedUrl(bucket_name, filename) {
+        const [url] = await this.storage
+            .bucket(bucket_name)
+            .file(filename)
+            .getSignedUrl({
+            version: "v4",
+            action: "read",
+            expires: Date.now() + 5 * 60 * 1000
+        });
+        return url;
+    }
+    async getFile(bucket_name, filename) {
+        const file = await this.storage
+            .bucket(bucket_name)
+            .file(filename);
+    }
+    async createWriteStream(bucket_name, filename) {
+        const writestream = await this.storage
+            .bucket(bucket_name)
+            .file(filename)
+            .createWriteStream();
+    }
+    async downloadFile(bucket_name, filename, destination) {
+        return await this.storage.bucket(bucket_name).file(filename).download({
+            destination: destination
+        });
+    }
     async uploadDocToStorage(fileObj, bucket, folder) {
         return new Promise((resolve, reject) => {
             let fileUpload = bucket.file(`${folder}/${fileObj.originalname}`);

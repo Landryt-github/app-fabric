@@ -9,32 +9,39 @@ var AppFabricModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppFabricModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_fabric_service_1 = require("./app-fabric.service");
 const exception_filter_1 = require("./filters/exception.filter");
 const logging_interceptor_1 = require("./interceptor/logging.interceptor");
 const auth_guard_1 = require("./guards/auth.guard");
 const nestjs_prometheus_1 = require("@willsoto/nestjs-prometheus");
 const file_storage_service_1 = require("./services/file-storage.service");
+const publish_subscribe_service_1 = require("./services/publish-subscribe.service");
 let AppFabricModule = AppFabricModule_1 = class AppFabricModule {
     static register(config) {
         return {
             module: AppFabricModule_1,
+            imports: [common_1.HttpModule],
             providers: [
                 {
                     provide: file_storage_service_1.CONFIG_OPTIONS,
                     useValue: config.storage
                 },
-                app_fabric_service_1.AppFabricService,
+                {
+                    provide: publish_subscribe_service_1.PUBSUB_OPTIONS,
+                    useValue: config.pubsub
+                },
                 exception_filter_1.AllExceptionsFilter,
                 logging_interceptor_1.LoggingInterceptor,
                 auth_guard_1.AuthGuard,
-                file_storage_service_1.FileStorageService
+                file_storage_service_1.FileStorageService,
+                publish_subscribe_service_1.PublishSubscribeService
             ],
-            exports: [app_fabric_service_1.AppFabricService,
+            exports: [
                 exception_filter_1.AllExceptionsFilter,
                 logging_interceptor_1.LoggingInterceptor,
                 auth_guard_1.AuthGuard,
-                file_storage_service_1.FileStorageService]
+                file_storage_service_1.FileStorageService,
+                publish_subscribe_service_1.PublishSubscribeService
+            ]
         };
     }
 };

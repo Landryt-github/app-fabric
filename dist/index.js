@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_fabric_module_1 = require("./app-fabric.module");
 Object.defineProperty(exports, "AppFabricModule", { enumerable: true, get: function () { return app_fabric_module_1.AppFabricModule; } });
-var app_fabric_service_1 = require("./app-fabric.service");
-Object.defineProperty(exports, "AppFabricService", { enumerable: true, get: function () { return app_fabric_service_1.AppFabricService; } });
 var exception_filter_1 = require("./filters/exception.filter");
 Object.defineProperty(exports, "AllExceptionsFilter", { enumerable: true, get: function () { return exception_filter_1.AllExceptionsFilter; } });
 var role_decorator_1 = require("./decorators/role.decorator");
@@ -15,4 +13,9 @@ Object.defineProperty(exports, "LoggingInterceptor", { enumerable: true, get: fu
 var file_storage_service_1 = require("./services/file-storage.service");
 Object.defineProperty(exports, "FileStorageService", { enumerable: true, get: function () { return file_storage_service_1.FileStorageService; } });
 Object.defineProperty(exports, "CONFIG_OPTIONS", { enumerable: true, get: function () { return file_storage_service_1.CONFIG_OPTIONS; } });
+var publish_subscribe_service_1 = require("./services/publish-subscribe.service");
+Object.defineProperty(exports, "PUBSUB_OPTIONS", { enumerable: true, get: function () { return publish_subscribe_service_1.PUBSUB_OPTIONS; } });
+Object.defineProperty(exports, "PublishSubscribeService", { enumerable: true, get: function () { return publish_subscribe_service_1.PublishSubscribeService; } });
+Object.defineProperty(exports, "Notification", { enumerable: true, get: function () { return publish_subscribe_service_1.Notification; } });
+Object.defineProperty(exports, "Notification_destination", { enumerable: true, get: function () { return publish_subscribe_service_1.Notification_destination; } });
 //# sourceMappingURL=index.js.map
