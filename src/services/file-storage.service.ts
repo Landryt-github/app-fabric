@@ -1,6 +1,6 @@
-import {Storage, Bucket} from '@google-cloud/storage';
+import {Storage, Bucket, File} from '@google-cloud/storage';
 import { Injectable, Inject } from "@nestjs/common";
-
+import {basename} from 'path';
 export const CONFIG_OPTIONS = 'STORAGE_OPTIONS';
 
 @Injectable()
@@ -57,6 +57,84 @@ export class FileStorageService {
       return await this.storage.bucket(bucket_name).file(filename).download({
         destination:destination
       })
+    }
+
+    async copyFiles(bucket_name:string,filenames: string[],destinationFolder:string):Promise<string[]>{
+        return new Promise(async (resolve,reject)=>{
+          try {
+                const urls:string[] = []; 
+                const copyPromises = filenames.map((filename)=>{
+                  const destinationFileName =`${destinationFolder}/${basename(filename)}` ;
+                    urls.push(destinationFileName)
+                    return this.copyFile(bucket_name,filename,destinationFileName);
+                });
+                const copyResponse = await Promise.all(copyPromises);
+                resolve(urls)
+              }
+              catch(error) {
+                reject(error)
+              }
+        });
+    }
+
+    async createFolder(bucket_name:string,folderNames:string[],destinationFolder:string):Promise<string[]> {
+        return new Promise(async (resolve,reject)=>{
+          try {
+                const urls:string[] = []; 
+                const createFolderPromises = folderNames.map((folderName)=> {
+                  const destinationName =`${destinationFolder}/${folderName}/` ;
+                  urls.push(destinationName)
+                  let contents=Buffer.alloc(0)
+                  return this.storage.bucket(bucket_name).file(destinationName).save(contents)
+                })
+                await Promise.all(createFolderPromises);
+                resolve(urls)
+          }
+          catch(error) {
+            reject(error)
+          }
+        })
+    }
+
+
+    async deleteFolder(bucket_name:string,folderName:string) {
+      let options = {
+        prefix:`${folderName}/`,
+      };
+      let dirFiles = await this.storage.bucket(bucket_name).getFiles(options);
+      if(dirFiles.length) {
+        dirFiles[0].forEach((file:File) => {
+         file.delete().catch()
+       });
+      }
+       
+     
+      //await Promise.all(delFilesPromise);
+      return 
+    }
+
+    async enable_cors(bucket_name:string) {
+      await this.storage.bucket(bucket_name).setCorsConfiguration([
+        {
+          maxAgeSeconds:3600,
+          method: ['GET','OPTIONS'],
+          origin: ['*'],
+          responseHeader: ['*'],
+        },
+      ]);
+    }
+
+    async copyFile(bucket_name:string,filename: string,destinationFilename:string) {
+      return this.storage.bucket(bucket_name).file(filename).copy(this.storage.bucket(bucket_name).file(destinationFilename))
+    }
+
+    async ListFiles(bucket_name:string,prefix?:string) {
+        let options =prefix? {
+          prefix:prefix,
+          //delimiter:'/'
+        }:null
+
+        return this.storage.bucket(bucket_name).getFiles(options)
     }
 
     private async uploadDocToStorage(fileObj: any,bucket:Bucket,folder:string): Promise<string> {

@@ -42,7 +42,6 @@ let PublishSubscribeService = PublishSubscribeService_1 = class PublishSubscribe
         let formdata = new FormData();
         if (message.body.attachments) {
             message.body.attachments.forEach((item) => {
-                console.log('STREAM:', typeof item.content.on === 'function');
                 if (item.content && (Buffer.isBuffer(item.content) || typeof item.content.on === 'function')) {
                     let filename = `${Date.now()}_${item.filename}`;
                     formdata.append('file', item.content, { filename: filename, filepath: `./tmp/${filename}` });

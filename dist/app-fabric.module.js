@@ -15,6 +15,7 @@ const auth_guard_1 = require("./guards/auth.guard");
 const nestjs_prometheus_1 = require("@willsoto/nestjs-prometheus");
 const file_storage_service_1 = require("./services/file-storage.service");
 const publish_subscribe_service_1 = require("./services/publish-subscribe.service");
+const user_data_middleware_1 = require("./middleware/user-data.middleware");
 let AppFabricModule = AppFabricModule_1 = class AppFabricModule {
     static register(config) {
         return {
@@ -33,14 +34,16 @@ let AppFabricModule = AppFabricModule_1 = class AppFabricModule {
                 logging_interceptor_1.LoggingInterceptor,
                 auth_guard_1.AuthGuard,
                 file_storage_service_1.FileStorageService,
-                publish_subscribe_service_1.PublishSubscribeService
+                publish_subscribe_service_1.PublishSubscribeService,
+                user_data_middleware_1.UserDataMiddleware
             ],
             exports: [
                 exception_filter_1.AllExceptionsFilter,
                 logging_interceptor_1.LoggingInterceptor,
                 auth_guard_1.AuthGuard,
                 file_storage_service_1.FileStorageService,
-                publish_subscribe_service_1.PublishSubscribeService
+                publish_subscribe_service_1.PublishSubscribeService,
+                user_data_middleware_1.UserDataMiddleware
             ]
         };
     }

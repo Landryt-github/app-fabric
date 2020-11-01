@@ -6,6 +6,7 @@ import { Config } from './interface/config.interface';
 import { PrometheusModule } from "@willsoto/nestjs-prometheus";
 import {FileStorageService, CONFIG_OPTIONS} from './services/file-storage.service'
 import { PublishSubscribeService,PUBSUB_OPTIONS } from './services/publish-subscribe.service';
+import { UserDataMiddleware } from './middleware/user-data.middleware';
 
 @Module({
   imports:[PrometheusModule.register()]
@@ -28,13 +29,15 @@ export class AppFabricModule {
         LoggingInterceptor,
         AuthGuard,
         FileStorageService,
-        PublishSubscribeService],
+        PublishSubscribeService,
+        UserDataMiddleware],
       exports: [
         AllExceptionsFilter,
         LoggingInterceptor,
         AuthGuard,
         FileStorageService,
-        PublishSubscribeService
+        PublishSubscribeService,
+        UserDataMiddleware
       ]
     }
   }

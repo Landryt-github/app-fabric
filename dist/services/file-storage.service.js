@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileStorageService = exports.CONFIG_OPTIONS = void 0;
 const storage_1 = require("@google-cloud/storage");
 const common_1 = require("@nestjs/common");
+const path_1 = require("path");
 exports.CONFIG_OPTIONS = 'STORAGE_OPTIONS';
 let FileStorageService = class FileStorageService {
     constructor(options) {
@@ -60,6 +61,72 @@ let FileStorageService = class FileStorageService {
         return await this.storage.bucket(bucket_name).file(filename).download({
             destination: destination
         });
+    }
+    async copyFiles(bucket_name, filenames, destinationFolder) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const urls = [];
+                const copyPromises = filenames.map((filename) => {
+                    const destinationFileName = `${destinationFolder}/${path_1.basename(filename)}`;
+                    urls.push(destinationFileName);
+                    return this.copyFile(bucket_name, filename, destinationFileName);
+                });
+                const copyResponse = await Promise.all(copyPromises);
+                resolve(urls);
+            }
+            catch (error) {
+                reject(error);
+            }
+        });
+    }
+    async createFolder(bucket_name, folderNames, destinationFolder) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const urls = [];
+                const createFolderPromises = folderNames.map((folderName) => {
+                    const destinationName = `${destinationFolder}/${folderName}/`;
+                    urls.push(destinationName);
+                    let contents = Buffer.alloc(0);
+                    return this.storage.bucket(bucket_name).file(destinationName).save(contents);
+                });
+                await Promise.all(createFolderPromises);
+                resolve(urls);
+            }
+            catch (error) {
+                reject(error);
+            }
+        });
+    }
+    async deleteFolder(bucket_name, folderName) {
+        let options = {
+            prefix: `${folderName}/`,
+        };
+        let dirFiles = await this.storage.bucket(bucket_name).getFiles(options);
+        if (dirFiles.length) {
+            dirFiles[0].forEach((file) => {
+                file.delete().catch();
+            });
+        }
+        return;
+    }
+    async enable_cors(bucket_name) {
+        await this.storage.bucket(bucket_name).setCorsConfiguration([
+            {
+                maxAgeSeconds: 3600,
+                method: ['GET', 'OPTIONS'],
+                origin: ['*'],
+                responseHeader: ['*'],
+            },
+        ]);
+    }
+    async copyFile(bucket_name, filename, destinationFilename) {
+        return this.storage.bucket(bucket_name).file(filename).copy(this.storage.bucket(bucket_name).file(destinationFilename));
+    }
+    async ListFiles(bucket_name, prefix) {
+        let options = prefix ? {
+            prefix: prefix,
+        } : null;
+        return this.storage.bucket(bucket_name).getFiles(options);
     }
     async uploadDocToStorage(fileObj, bucket, folder) {
         return new Promise((resolve, reject) => {
