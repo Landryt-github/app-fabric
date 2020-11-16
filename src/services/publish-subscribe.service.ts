@@ -30,7 +30,7 @@ export class PublishSubscribeService {
         return this.publishMessage(message,Topics.NOTIFICATION)
     }
 
-    async sendNotification_direct<T extends Notification>(message:Notification,endpoint:string) {
+    async sendNotification_direct<T extends Notification>(message:Notification,endpoint?:string) {
         //return this.publishMessage(message,Topics.NOTIFICATION)
         let formdata = new FormData();
  
@@ -46,9 +46,8 @@ export class PublishSubscribeService {
             });
         }
 
-        formdata.append('notification',JSON.stringify(message))
-
-        this.http.post(endpoint,
+        formdata.append('notification',JSON.stringify(message));
+        this.http.post(endpoint||process.env.NOTIFICATION_URL,
             formdata,{
                 headers: {
                     ...formdata.getHeaders(),

@@ -23,7 +23,7 @@ let AuthGuard = class AuthGuard {
         }
         else {
             const request = context.switchToHttp().getRequest();
-            const user = request.body.user;
+            const user = extract_user(request.headers.user);
             if (user && user.role) {
                 return roles.includes(user.role);
             }
@@ -36,4 +36,12 @@ AuthGuard = __decorate([
     __metadata("design:paramtypes", [core_1.Reflector])
 ], AuthGuard);
 exports.AuthGuard = AuthGuard;
+const extract_user = (userString) => {
+    let user = undefined;
+    try {
+        user = JSON.parse(userString);
+    }
+    catch (error) { }
+    return user;
+};
 //# sourceMappingURL=auth.guard.js.map

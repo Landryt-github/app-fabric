@@ -51,7 +51,7 @@ let PublishSubscribeService = PublishSubscribeService_1 = class PublishSubscribe
             });
         }
         formdata.append('notification', JSON.stringify(message));
-        this.http.post(endpoint, formdata, {
+        this.http.post(endpoint || process.env.NOTIFICATION_URL, formdata, {
             headers: Object.assign(Object.assign({}, formdata.getHeaders()), { 'Content-Type': 'multipart/form-data;' }),
         }).toPromise()
             .catch((error) => {

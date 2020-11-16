@@ -6,11 +6,11 @@ export class UserDataMiddleware implements NestMiddleware {
         console.log('INSIDE THE MIDDLEWARE')
         const currentUser =  this.extract_user(req.headers.user);
         if(currentUser) {
-            const user = {id:currentUser.id,name:currentUser.name};
+            const user = {id:currentUser.id,name:currentUser.name,role:currentUser.role,account:currentUser.account};
             req.body.user = user
         }
         else {
-            req.body.user={id:'XXX_ANONYMOUS_XXX',name:'ANONYMOUS'}
+            req.body.user={id:'XXX_ANONYMOUS_XXX',name:'ANONYMOUS',role:'XXX',account:'XXX'}
         }
         next();
     }

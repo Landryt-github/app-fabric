@@ -8,7 +8,7 @@ export declare class PublishSubscribeService {
     constructor(options: any, http: HttpService);
     publishMessage<T>(request: T, topic_name: string | Topics): Promise<any>;
     sendNotification<T extends Notification>(message: Notification): Promise<any>;
-    sendNotification_direct<T extends Notification>(message: Notification, endpoint: string): Promise<void>;
+    sendNotification_direct<T extends Notification>(message: Notification, endpoint?: string): Promise<void>;
 }
 export declare const enum Topics {
     NOTIFICATION = "notification",
