@@ -13,15 +13,18 @@ let AllExceptionsFilter = class AllExceptionsFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-        console.log(exception);
         const status = exception.getStatus ? exception.getStatus() : common_1.HttpStatus.INTERNAL_SERVER_ERROR;
+        const data = exception.getData ? exception.getData() : undefined;
+        const user = extract_user(request.headers.user);
         const error_response = {
             statusCode: status,
             timestamp: new Date().toISOString(),
-            message: (exception.response ? exception.response.message : undefined) || exception.message,
+            message: exception.response ? exception.response.message || exception.response : exception.message,
+            errcode: exception.response ? exception.response.errcode : '',
+            data: data,
             path: request.url,
-            uid: request.body.user ? request.body.user.uid : 'anonymous',
-            method: request.method
+            uid: user.id,
+            method: request.method,
         };
         common_1.Logger.error(`${request.method} ${request.url}`, JSON.stringify(Object.assign(Object.assign({}, error_response), { stack: exception.stack })), 'ExceptionFilter');
         response.status(status).json(error_response);
@@ -31,4 +34,12 @@ AllExceptionsFilter = __decorate([
     common_1.Catch()
 ], AllExceptionsFilter);
 exports.AllExceptionsFilter = AllExceptionsFilter;
+const extract_user = (userString) => {
+    let user = undefined;
+    try {
+        user = JSON.parse(userString);
+    }
+    catch (error) { }
+    return user;
+};
 //# sourceMappingURL=exception.filter.js.map
