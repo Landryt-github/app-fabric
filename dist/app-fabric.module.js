@@ -16,6 +16,7 @@ const nestjs_prometheus_1 = require("@willsoto/nestjs-prometheus");
 const file_storage_service_1 = require("./services/file-storage.service");
 const publish_subscribe_service_1 = require("./services/publish-subscribe.service");
 const user_data_middleware_1 = require("./middleware/user-data.middleware");
+const storage_aws_1 = require("./services/storage/storage.aws");
 let AppFabricModule = AppFabricModule_1 = class AppFabricModule {
     static register(config) {
         return {
@@ -29,6 +30,12 @@ let AppFabricModule = AppFabricModule_1 = class AppFabricModule {
                 {
                     provide: publish_subscribe_service_1.PUBSUB_OPTIONS,
                     useValue: config.pubsub
+                },
+                {
+                    provide: 'STORAGE',
+                    useFactory: () => {
+                        return config.storage && config.storage.keyFile ? new storage_aws_1.StorageAws(config.storage) : null;
+                    }
                 },
                 exception_filter_1.AllExceptionsFilter,
                 logging_interceptor_1.LoggingInterceptor,

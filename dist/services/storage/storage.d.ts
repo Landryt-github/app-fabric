@@ -1,8 +1,5 @@
-import { StorageService } from './storage/storage';
 export declare const CONFIG_OPTIONS = "STORAGE_OPTIONS";
-export declare class FileStorageService {
-    private storage;
-    constructor(storage: StorageService);
+export interface StorageService {
     upload(files: [], bucket_name: string, folder_name: string): Promise<string[]>;
     getReadSignedUrl(bucket_name: string, filename: string): Promise<string>;
     downloadFile(bucket_name: string, filename: string, destination: string): Promise<any>;

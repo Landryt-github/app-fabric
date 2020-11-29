@@ -21,6 +21,14 @@ export class AuthGuard implements CanActivate  {
     }
 }
 
+export enum TRole {
+    ADMIN_TENANT='admin',
+    STAFF_TENANT ='staff',
+    ADMIN_OPS='admin_ops',
+    PARTNER='partner',
+    SUPER_ADMIN='owner'
+}
+
 const extract_user =(userString:string)=> {
     let user = undefined;
     try {
@@ -29,3 +37,5 @@ const extract_user =(userString:string)=> {
     catch(error){}
     return user;
 }
+
+

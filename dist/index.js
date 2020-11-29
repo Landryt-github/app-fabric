@@ -20,6 +20,7 @@ var user_decorator_1 = require("./decorators/user.decorator");
 Object.defineProperty(exports, "User", { enumerable: true, get: function () { return user_decorator_1.User; } });
 var auth_guard_1 = require("./guards/auth.guard");
 Object.defineProperty(exports, "AuthGuard", { enumerable: true, get: function () { return auth_guard_1.AuthGuard; } });
+Object.defineProperty(exports, "TRole", { enumerable: true, get: function () { return auth_guard_1.TRole; } });
 var logging_interceptor_1 = require("./interceptor/logging.interceptor");
 Object.defineProperty(exports, "LoggingInterceptor", { enumerable: true, get: function () { return logging_interceptor_1.LoggingInterceptor; } });
 var user_data_interceptor_1 = require("./interceptor/user-data.interceptor");

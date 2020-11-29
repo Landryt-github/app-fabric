@@ -13,140 +13,37 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileStorageService = exports.CONFIG_OPTIONS = void 0;
-const storage_1 = require("@google-cloud/storage");
 const common_1 = require("@nestjs/common");
-const path_1 = require("path");
 exports.CONFIG_OPTIONS = 'STORAGE_OPTIONS';
 let FileStorageService = class FileStorageService {
-    constructor(options) {
-        this.options = options;
-        this.storage = new storage_1.Storage({
-            projectId: options.projectId,
-            keyFilename: options.keyFile
-        });
+    constructor(storage) {
+        this.storage = storage;
     }
     async upload(files, bucket_name, folder_name) {
-        if (files && files.length > 0) {
-            const bucket = this.storage.bucket(bucket_name);
-            const folder = folder_name;
-            const uploadPromises = files.map(file => { return this.uploadDocToStorage(file, bucket, folder); });
-            const urls = await Promise.all(uploadPromises);
-            return urls;
-        }
-        return Promise.all([]);
+        return this.storage.upload(files, bucket_name, folder_name);
     }
     async getReadSignedUrl(bucket_name, filename) {
-        const [url] = await this.storage
-            .bucket(bucket_name)
-            .file(filename)
-            .getSignedUrl({
-            version: "v4",
-            action: "read",
-            expires: Date.now() + 5 * 60 * 1000
-        });
-        return url;
-    }
-    async getFile(bucket_name, filename) {
-        const file = await this.storage
-            .bucket(bucket_name)
-            .file(filename);
-    }
-    async createWriteStream(bucket_name, filename) {
-        const writestream = await this.storage
-            .bucket(bucket_name)
-            .file(filename)
-            .createWriteStream();
+        return this.storage.getReadSignedUrl(bucket_name, filename);
     }
     async downloadFile(bucket_name, filename, destination) {
-        return await this.storage.bucket(bucket_name).file(filename).download({
-            destination: destination
-        });
+        return this.storage.downloadFile(bucket_name, filename, destination);
     }
     async copyFiles(bucket_name, filenames, destinationFolder) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const urls = [];
-                const copyPromises = filenames.map((filename) => {
-                    const destinationFileName = `${destinationFolder}/${path_1.basename(filename)}`;
-                    urls.push(destinationFileName);
-                    return this.copyFile(bucket_name, filename, destinationFileName);
-                });
-                const copyResponse = await Promise.all(copyPromises);
-                resolve(urls);
-            }
-            catch (error) {
-                reject(error);
-            }
-        });
+        return this.storage.copyFiles(bucket_name, filenames, destinationFolder);
     }
     async createFolder(bucket_name, folderNames, destinationFolder) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const urls = [];
-                const createFolderPromises = folderNames.map((folderName) => {
-                    const destinationName = `${destinationFolder}/${folderName}/`;
-                    urls.push(destinationName);
-                    let contents = Buffer.alloc(0);
-                    return this.storage.bucket(bucket_name).file(destinationName).save(contents);
-                });
-                await Promise.all(createFolderPromises);
-                resolve(urls);
-            }
-            catch (error) {
-                reject(error);
-            }
-        });
+        return this.storage.createFolder(bucket_name, folderNames, destinationFolder);
     }
     async deleteFolder(bucket_name, folderName) {
-        let options = {
-            prefix: `${folderName}/`,
-        };
-        let dirFiles = await this.storage.bucket(bucket_name).getFiles(options);
-        if (dirFiles.length) {
-            dirFiles[0].forEach((file) => {
-                file.delete().catch();
-            });
-        }
-        return;
-    }
-    async enable_cors(bucket_name) {
-        await this.storage.bucket(bucket_name).setCorsConfiguration([
-            {
-                maxAgeSeconds: 3600,
-                method: ['GET', 'OPTIONS'],
-                origin: ['*'],
-                responseHeader: ['*'],
-            },
-        ]);
-    }
-    async copyFile(bucket_name, filename, destinationFilename) {
-        return this.storage.bucket(bucket_name).file(filename).copy(this.storage.bucket(bucket_name).file(destinationFilename));
+        return this.storage.deleteFolder(bucket_name, folderName);
     }
     async ListFiles(bucket_name, prefix) {
-        let options = prefix ? {
-            prefix: prefix,
-        } : null;
-        return this.storage.bucket(bucket_name).getFiles(options);
-    }
-    async uploadDocToStorage(fileObj, bucket, folder) {
-        return new Promise((resolve, reject) => {
-            let fileUpload = bucket.file(`${folder}/${fileObj.originalname}`);
-            let blobStream = fileUpload.createWriteStream({ metadata: { contentType: fileObj.mimetype } });
-            blobStream.on('error', (error) => {
-                console.log(error);
-                reject(new Error('Something is wrong! Unable to upload at the moment.'));
-            });
-            blobStream.on('finish', () => {
-                const url = fileUpload.name;
-                resolve(url);
-            });
-            blobStream.end(fileObj.buffer);
-        });
+        return this.storage.ListFiles(bucket_name, prefix);
     }
 };
 FileStorageService = __decorate([
     common_1.Injectable(),
-    __param(0, common_1.Inject(exports.CONFIG_OPTIONS)),
+    __param(0, common_1.Inject('STORAGE')),
     __metadata("design:paramtypes", [Object])
 ], FileStorageService);
 exports.FileStorageService = FileStorageService;

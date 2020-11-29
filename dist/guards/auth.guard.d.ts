@@ -6,3 +6,10 @@ export declare class AuthGuard implements CanActivate {
     constructor(reflector: Reflector);
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
 }
+export declare enum TRole {
+    ADMIN_TENANT = "admin",
+    STAFF_TENANT = "staff",
+    ADMIN_OPS = "admin_ops",
+    PARTNER = "partner",
+    SUPER_ADMIN = "owner"
+}
