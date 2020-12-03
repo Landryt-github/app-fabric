@@ -33,12 +33,12 @@ let StorageAws = class StorageAws {
     }
     async upload(files, bucket_name, folder_name) {
         if (files && files.length > 0) {
-            const folder = folder_name;
             const promises = files.map((file) => {
                 return this.storage.upload({
                     Bucket: bucket_name,
                     Key: `${folder_name}/${file.originalname}`,
-                    Body: file.buffer
+                    Body: file.buffer,
+                    ContentType: file.mimetype
                 }).promise();
             });
             return (await Promise.all(promises)).map((item) => { return item.Key; });
