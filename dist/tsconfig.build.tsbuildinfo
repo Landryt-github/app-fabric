@@ -1122,7 +1122,7 @@
         "affectsGlobalScope": false
       },
       "../src/filters/exception.filter.ts": {
-        "version": "aa62578b608586de86f2c29149db8a55f5eddbda7e2f0c3ff43648d1c04c90f5",
+        "version": "009afe37e13c4ee31619ee994902c3a3336bf1da47506feab4a7e20b06b5df58",
         "signature": "6984ae9180829afe1f722aa9dc1ace67129494cad84c2c0c8df8719ba1769a2c",
         "affectsGlobalScope": false
       },
