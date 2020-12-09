@@ -24,6 +24,13 @@ export class StorageAws implements StorageService {
         })
     }
 
+    async deleteFile(bucket_name: string, fileName: string): Promise<any> {
+      return await this.storage.deleteObject({
+        Bucket:bucket_name,
+        Key:fileName
+      }).promise()
+    }
+
     async upload(files:[],bucket_name:string,folder_name:string):Promise<string[]> {
         if(files && files.length>0) {
           //const folder = folder_name;

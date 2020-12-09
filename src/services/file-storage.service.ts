@@ -47,6 +47,10 @@ export class FileStorageService {
       return this.storage.deleteFolder(bucket_name,folderName)
     }
 
+    async deleteFile(bucket_name:string,fileName:string) {
+      return this.storage.deleteFile(bucket_name,fileName)
+    }
+
     async ListFiles(bucket_name:string,prefix?:string) {
       return this.storage.ListFiles(bucket_name,prefix)
     }

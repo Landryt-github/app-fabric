@@ -31,6 +31,12 @@ let StorageAws = class StorageAws {
             }
         });
     }
+    async deleteFile(bucket_name, fileName) {
+        return await this.storage.deleteObject({
+            Bucket: bucket_name,
+            Key: fileName
+        }).promise();
+    }
     async upload(files, bucket_name, folder_name) {
         if (files && files.length > 0) {
             const promises = files.map((file) => {

@@ -9,5 +9,6 @@ export declare class FileStorageService {
     copyFiles(bucket_name: string, filenames: string[], destinationFolder: string): Promise<string[]>;
     createFolder(bucket_name: string, folderNames: string[], destinationFolder: string): Promise<string[]>;
     deleteFolder(bucket_name: string, folderName: string): Promise<any>;
+    deleteFile(bucket_name: string, fileName: string): Promise<any>;
     ListFiles(bucket_name: string, prefix?: string): Promise<any>;
 }

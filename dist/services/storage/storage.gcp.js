@@ -25,6 +25,9 @@ let StorageGcp = class StorageGcp {
             keyFilename: options.keyFile
         });
     }
+    async deleteFile(bucket_name, fileName) {
+        await this.storage.bucket(bucket_name).file(fileName).delete();
+    }
     async upload(files, bucket_name, folder_name) {
         if (files && files.length > 0) {
             const bucket = this.storage.bucket(bucket_name);

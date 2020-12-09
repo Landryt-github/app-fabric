@@ -28,7 +28,6 @@ let AllExceptionsFilter = class AllExceptionsFilter {
                 method: request.method,
             };
             common_1.Logger.error(`${request.method} ${request.url}`, JSON.stringify(Object.assign(Object.assign({}, error_response), { stack: exception.stack })), 'ExceptionFilter');
-            console.log("EXCEPTION FILTER4:");
             response.status(status).json(error_response);
         }
         catch (error) {

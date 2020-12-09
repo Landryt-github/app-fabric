@@ -15,6 +15,10 @@ export class StorageGcp implements StorageService {
           });
     }
 
+    async deleteFile(bucket_name: string, fileName: string): Promise<any> {
+      await this.storage.bucket(bucket_name).file(fileName).delete();
+    }
+
     async upload(files:[],bucket_name:string,folder_name:string):Promise<string[]> {
         if(files && files.length>0) {
           const bucket = this.storage.bucket(bucket_name);

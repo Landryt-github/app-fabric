@@ -37,6 +37,9 @@ let FileStorageService = class FileStorageService {
     async deleteFolder(bucket_name, folderName) {
         return this.storage.deleteFolder(bucket_name, folderName);
     }
+    async deleteFile(bucket_name, fileName) {
+        return this.storage.deleteFile(bucket_name, fileName);
+    }
     async ListFiles(bucket_name, prefix) {
         return this.storage.ListFiles(bucket_name, prefix);
     }

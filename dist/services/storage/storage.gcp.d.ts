@@ -4,6 +4,7 @@ export declare class StorageGcp implements StorageService {
     private options;
     private storage;
     constructor(options: any);
+    deleteFile(bucket_name: string, fileName: string): Promise<any>;
     upload(files: [], bucket_name: string, folder_name: string): Promise<string[]>;
     getReadSignedUrl(bucket_name: string, filename: string): Promise<string>;
     downloadFile(bucket_name: string, filename: string, destination: string): Promise<import("@google-cloud/storage").DownloadResponse>;
