@@ -178,6 +178,22 @@ export class StorageAws implements StorageService {
         return resultDocs;
     }
 
+    async uploadBase64Image(bucket_name:string,file:string,fileName:string) {
+      const data = file.replace(/^data:image\/\w+;base64,/, "");
+      console.log(data)
+      const buffer =  Buffer.from(data,'base64')
+      const type = file.split(';')[0].split('/')[1];
+      const params = {
+        Bucket:bucket_name,
+        Key: `${fileName}.${type}`, 
+        Body: buffer,
+        ACL:'public-read',
+        ContentEncoding: 'base64',
+        ContentType: `image/${type}`
+      };
 
+      const {Location, Key} = await this.storage.upload(params).promise();
+      return `${Location}`
+    }
     
 }

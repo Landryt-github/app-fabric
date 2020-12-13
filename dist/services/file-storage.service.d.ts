@@ -11,4 +11,5 @@ export declare class FileStorageService {
     deleteFolder(bucket_name: string, folderName: string): Promise<any>;
     deleteFile(bucket_name: string, fileName: string): Promise<any>;
     ListFiles(bucket_name: string, prefix?: string): Promise<any>;
+    uploadBase64Image(bucket_name: string, file: string, fileName: string): Promise<any>;
 }

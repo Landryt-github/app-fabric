@@ -1,5 +1,5 @@
 import {Storage, Bucket, File} from '@google-cloud/storage';
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
 import {basename} from 'path';
 import { StorageService } from './storage';
 export const CONFIG_OPTIONS = 'STORAGE_OPTIONS';
@@ -41,6 +41,10 @@ export class StorageGcp implements StorageService {
                           });
 
         return url;
+    }
+
+    async uploadBase64Image(bucket_name:string,fileName:string) {
+      throw new HttpException("Not Implemented", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
     /*async getFile(bucket_name:string,filename: string) {

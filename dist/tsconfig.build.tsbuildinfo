@@ -2362,13 +2362,13 @@
         "affectsGlobalScope": false
       },
       "../src/services/storage/storage.ts": {
-        "version": "4446e8132a9a476df16a5b5169a6c1ab8ba0a9bb41513d40a065db358a7b9faf",
-        "signature": "4342c944bfbde3c3e008d128f662300c8da3575b828724cde3c43f4aa885da94",
+        "version": "61682963c3e218e8e3ad7c18834c79c669c8bd67c76a8985f2fc2fe4836e10f6",
+        "signature": "e5c13c8897c8547cff276630cc09bba113bf67f7e6a897c184c61477ef2e6d48",
         "affectsGlobalScope": false
       },
       "../src/services/file-storage.service.ts": {
-        "version": "8e799096651982475db56b684b36cf6b0bd1152140407a431557dab8ff37b04b",
-        "signature": "d93f6d4ec0a9674381c57d6bc8f7961868419f8ca180ce4df6932951b3fc4dc7",
+        "version": "9549581af9ff1ab15a962a671f6c7709db0ab877f8d54d2b14590cb1e5a97938",
+        "signature": "5ab524ba16001be8cbb4ee1c0f17f84b00ebcc5256b2f4f5ad60c1b6d5f81c38",
         "affectsGlobalScope": false
       },
       "../node_modules/@grpc/grpc-js/build/src/metadata.d.ts": {
@@ -4437,13 +4437,13 @@
         "affectsGlobalScope": false
       },
       "../src/services/storage/storage.aws.ts": {
-        "version": "43eef89e2ee892c75d6dc94a99f2408b5f62cd4f62b10972e7c2a80c13d165ef",
-        "signature": "d49fa6a46330fbf9d14acf47389055c3744faa0e7c5a4941a6de14dd8b409213",
+        "version": "28d5e4f65a442d477a9ab53c5aa356473b7088da26cc82d59100a1ee22e8481c",
+        "signature": "e4734fcaec3496179c4e1d48fec39edf24b640ffb3d38cc49d14e89c7b10a5b1",
         "affectsGlobalScope": false
       },
       "../src/services/storage/storage.gcp.ts": {
-        "version": "4f444ee68f955f6db153a9dc02cc741d50141fb6a0e78fb24c253513eb01bb54",
-        "signature": "2fbfc818c8e6dab2a4323970d1a35094ab0280e36d61bce1c48dc3812b9a5155",
+        "version": "9faf03ba6c374756fbc224fa3f17eaaf2af03aea08a553a48f7a09fb84ba2d6e",
+        "signature": "0a72a0faec00a5b580cb1eca6c72066ddea71ed13efd0d2789da94e592fe8cb5",
         "affectsGlobalScope": false
       },
       "../src/app-fabric.module.ts": {

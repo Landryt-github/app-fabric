@@ -43,6 +43,9 @@ let FileStorageService = class FileStorageService {
     async ListFiles(bucket_name, prefix) {
         return this.storage.ListFiles(bucket_name, prefix);
     }
+    async uploadBase64Image(bucket_name, file, fileName) {
+        return this.storage.uploadBase64Image(bucket_name, file, fileName);
+    }
 };
 FileStorageService = __decorate([
     common_1.Injectable(),

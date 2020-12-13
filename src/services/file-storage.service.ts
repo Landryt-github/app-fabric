@@ -54,6 +54,10 @@ export class FileStorageService {
     async ListFiles(bucket_name:string,prefix?:string) {
       return this.storage.ListFiles(bucket_name,prefix)
     }
+
+    async uploadBase64Image(bucket_name:string,file:string,fileName:string) {
+      return this.storage.uploadBase64Image(bucket_name,file,fileName)
+    }
     
     /*async copyFile(bucket_name:string,filename: string,destinationFilename:string) {
       return this.storage.copyFile(bucket_name,filename,destinationFilename)

@@ -49,6 +49,9 @@ let StorageGcp = class StorageGcp {
         });
         return url;
     }
+    async uploadBase64Image(bucket_name, fileName) {
+        throw new common_1.HttpException("Not Implemented", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     async downloadFile(bucket_name, filename, destination) {
         return await this.storage.bucket(bucket_name).file(filename).download({
             destination: destination
