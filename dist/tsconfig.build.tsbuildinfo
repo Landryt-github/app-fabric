@@ -3017,8 +3017,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/publish-subscribe.service.ts": {
-        "version": "c02ad9103e28a50b5e5208292a370c4505e6ddb922b9625ba194ebf4b19ce05d",
-        "signature": "4320a946e0495a84259415751d4baa74edb20f874fffd431f0cc85690831eef8",
+        "version": "ca21b4ac43c981a7b231b968086c0de46a9382e21a9744e0b8c7c075633f1a91",
+        "signature": "2150a993a9b75e2eef8215e3d54c40a96bf3176ca41e057a27ce0fba89d6da4d",
         "affectsGlobalScope": false
       },
       "../src/middleware/user-data.middleware.ts": {
@@ -4437,7 +4437,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/storage/storage.aws.ts": {
-        "version": "28d5e4f65a442d477a9ab53c5aa356473b7088da26cc82d59100a1ee22e8481c",
+        "version": "7874059f55380759cab27ce86c12e3ab05db14e2cadb74a18d2a98c85504b09b",
         "signature": "e4734fcaec3496179c4e1d48fec39edf24b640ffb3d38cc49d14e89c7b10a5b1",
         "affectsGlobalScope": false
       },

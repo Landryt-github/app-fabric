@@ -78,6 +78,7 @@ export enum Notification_destination {
 export class Notification {
     type?:string;
     destination:Notification_destination[]
-    template:string;//Used for finding the template
+    template:string;//Used for finding the template,
+    source?:"db"|"file";
     body:any
 }

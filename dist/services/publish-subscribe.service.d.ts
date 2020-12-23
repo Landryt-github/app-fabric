@@ -25,5 +25,6 @@ export declare class Notification {
     type?: string;
     destination: Notification_destination[];
     template: string;
+    source?: "db" | "file";
     body: any;
 }

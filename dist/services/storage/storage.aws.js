@@ -132,6 +132,7 @@ let StorageAws = class StorageAws {
             Prefix: prefix,
         } : null;
         let files = await this.storage.listObjects(options).promise();
+        console.log(files);
         let resultDocs = [];
         files.Contents.forEach((item) => {
             if (item.Size > 0) {
@@ -148,7 +149,6 @@ let StorageAws = class StorageAws {
     }
     async uploadBase64Image(bucket_name, file, fileName) {
         const data = file.replace(/^data:image\/\w+;base64,/, "");
-        console.log(data);
         const buffer = Buffer.from(data, 'base64');
         const type = file.split(';')[0].split('/')[1];
         const params = {

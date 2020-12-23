@@ -161,7 +161,9 @@ export class StorageAws implements StorageService {
           //delimiter:'/'
         }:null
 
+
         let files = await this.storage.listObjects(options).promise();
+        console.log(files)
         let resultDocs = [];
         files.Contents.forEach((item)=> {
           if(item.Size>0) {
@@ -180,7 +182,6 @@ export class StorageAws implements StorageService {
 
     async uploadBase64Image(bucket_name:string,file:string,fileName:string) {
       const data = file.replace(/^data:image\/\w+;base64,/, "");
-      console.log(data)
       const buffer =  Buffer.from(data,'base64')
       const type = file.split(';')[0].split('/')[1];
       const params = {
